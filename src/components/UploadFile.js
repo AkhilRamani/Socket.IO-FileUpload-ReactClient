@@ -52,6 +52,7 @@ class UploadFile extends Component{
             socket.emit('START', { name, size: this.state.selectedFile.size });
             this.setState({pauseUpload: true});
         } else{
+            if(!this.state.allFiles) return message.warning('Please select file first');
             this.setState({ pauseUpload: false, loaded: 100});
             message.success('All Files Uploaded Successfully');
         }
