@@ -3,7 +3,6 @@ import './App.css';
 import UploadFile from './components/UploadFile';
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
-import AntdUpload from './components/antdUpload';
 import { socket } from './socket/openSocket';
 import { FilePond, registerPlugin } from 'react-filepond';
 import FilePondPluginFileEncode from 'filepond-plugin-file-encode';
@@ -22,14 +21,17 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <UploadFile />
+      <div className="App" style={{paddingTop: 40}}>
+      <div style={{width: 300}}>
+          <UploadFile 
+              onPause={()=> console.log('onPause Worked')}
+              onComplete={()=> console.log('onComplete called')}
+              multiple
+          />
+      </div>
         <hr style={{marginTop: 50}} />
         <h3>FilePond</h3>
         <FilePond className='temp' name='file' allowMultiple={true} server='http://192.168.0.175:3000/upload' />
-        <hr style={{marginTop: 50}} />
-        <h3>ANT Design</h3>
-        <AntdUpload className='temp' />
       </div>
     );
   }
