@@ -26,6 +26,7 @@ class App extends Component {
           <UploadFile 
               onPause={()=> console.log('onPause Worked')}
               onComplete={()=> console.log('onComplete called')}
+              onResume={()=> console.log('onResume called')}
               multiple
           />
       </div>

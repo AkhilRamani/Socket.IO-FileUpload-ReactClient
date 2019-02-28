@@ -7,7 +7,7 @@ import UploadBtn from './elements/UploadBtn';
 
 class UploadFile extends Component{
     state = {
-        selectedFile: null, loaded: 0, pauseUpload: false, allFiles: null, totalRemainingFiles: null, fileInputText: null
+        selectedFile: null, loaded: 0, pauseUpload: false, allFiles: null, totalRemainingFiles: null, fileInputText: null, resume: false
     }
     fReader = new FileReader();
     count = 1;
@@ -24,8 +24,8 @@ class UploadFile extends Component{
                 this.setState((state)=> ({selectedFile: state.allFiles[this.count], totalRemainingFiles: --state.totalRemainingFiles, loaded:0}));
                 this.handleSocketUpload();
                 ++this.count;
-                this.props.onComplete();
-            }       
+                !this.state.totalRemainingFiles && this.props.onComplete();
+            }      
         })
     }
     
@@ -58,14 +58,20 @@ class UploadFile extends Component{
             this.setState({pauseUpload: true});
         } else{
             if(!this.state.allFiles) return null;
-            this.setState({ pauseUpload: false, loaded: 100});
+            this.setState({ pauseUpload: false, loaded: 100, totalRemainingFiles: null, resume: false});
             //message.success('All Files Uploaded Successfully');
         }
     }
-
+    
     handlePause = () =>{
-        this.setState({ pauseUpload: false});
+        this.setState({ pauseUpload: false });
         this.props.onPause();
+    }
+    
+    handleClick = () => {
+        this.state.resume && this.props.onResume();
+        this.handleSocketUpload();
+        this.setState({resume: true})
     }
 
     render(){
@@ -75,7 +81,7 @@ class UploadFile extends Component{
                     <input type='file' name='file' id='fileInput' onChange={this.handleSelectedFile} multiple={this.props.multiple && 'multiple'} />
                     <label className='input-text' style={{fontSize: 15
                                                     }} htmlFor="fileInput">{this.state.fileInputText || 'Select Files'}</label>
-                    <UploadBtn pauseUpload={this.state.pauseUpload} onClick={!this.state.pauseUpload ? this.handleSocketUpload : this.handlePause} />      
+                    <UploadBtn pauseUpload={this.state.pauseUpload} onClick={!this.state.pauseUpload ? this.handleClick : this.handlePause} />      
                 </div>
                 <ProgressBar percent={Math.round(this.state.loaded, 2)} />
             </div>
