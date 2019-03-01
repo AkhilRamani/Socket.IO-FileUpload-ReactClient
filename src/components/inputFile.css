@@ -6,16 +6,16 @@
     display:none;
     margin:10px;
     }
-    #hide input[type=file] + label {
+#hide input[type=file] + label {
     display:inline-block;
-    width: 79%;
-    padding: 6px 0 7px 0;
-    margin:0 20px 12px 0;
+    width: 75%;
+    height: 30px;
+    margin:0 0px 12px 0;
     background-color: #FFFFFF;
     border:solid 1px #40a9ff;
     border-radius: 50px;
     color: #40a9ff;
-    }
+}
 
 #hide input[type=file]:hover + label {
     transition-duration: 0.2s;
@@ -25,6 +25,7 @@
     color:#FFFFFF;
 }
 /* 1890ff */
+/* ========================= */
 
 .upload-btn {
     border: 1px solid ;
@@ -47,3 +48,30 @@
     cursor: pointer;
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
 }
+
+.cancel-btn{
+    outline: none;
+    color: rgba(39, 38, 38, 0.65);
+    margin: 3px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    border: 1px solid;
+    border-color: #d9d9d9;
+    width: 23px;
+    height: 23px;
+    padding: 0%;
+    float: right;
+}
+.cancel-btn:hover{
+    transition-duration: 0.3s;
+    color: rgb(255, 42, 42);
+    border-color: rgb(255, 42, 42);
+}
+
+.cancel-btn svg{
+    padding-top: 3px;
+    font-size: 11px
+}
+/* .input-text .text{
+    padd
+} */

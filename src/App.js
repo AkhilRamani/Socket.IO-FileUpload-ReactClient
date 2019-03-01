@@ -27,12 +27,13 @@ class App extends Component {
               onPause={()=> console.log('onPause Worked')}
               onComplete={()=> console.log('onComplete called')}
               onResume={()=> console.log('onResume called')}
+              onCancel={()=> console.log('onCancel called')}
               multiple
           />
       </div>
-        <hr style={{marginTop: 50}} />
+        {/* <hr style={{marginTop: 50}} />
         <h3>FilePond</h3>
-        <FilePond className='temp' name='file' allowMultiple={true} server='http://192.168.0.175:3000/upload' />
+        <FilePond className='temp' name='file' allowMultiple={true} server='http://192.168.0.175:3000/upload' /> */}
       </div>
     );
   }
