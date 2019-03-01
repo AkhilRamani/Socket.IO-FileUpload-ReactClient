@@ -1,7 +1,7 @@
 import React,{ Component} from 'react';
 import { socket } from '../socket/openSocket';
 import './inputFile.css';
-import ProgressBar from './progressBar';
+import ProgressBar from './elements/progressBar';
 import UploadBtn from './elements/UploadBtn';
 import CancelBtn from './elements/CancelBtn';
 
