@@ -8,8 +8,9 @@
     }
     #hide input[type=file] + label {
     display:inline-block;
+    width: 79%;
+    padding: 6px 0 7px 0;
     margin:0 20px 12px 0;
-    padding: 6px 47px 7px 47px;
     background-color: #FFFFFF;
     border:solid 1px #40a9ff;
     border-radius: 50px;
@@ -18,7 +19,7 @@
 
 #hide input[type=file]:hover + label {
     transition-duration: 0.2s;
-    box-shadow: 1px 2px 1px 0.5px rgb(218, 218, 218);
+    box-shadow: 1px 1px 1px 0.5px rgb(218, 218, 218);
     background-image: none;
     background-color:#40a9ff;
     color:#FFFFFF;
