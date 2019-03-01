@@ -71,7 +71,7 @@ class UploadFile extends Component{
     handleClick = () => {
         this.state.resume && this.props.onResume();
         this.handleSocketUpload();
-        this.setState({resume: true})
+        this.state.selectedFile && this.setState({resume: true})
     }
 
     render(){
