@@ -1,5 +1,4 @@
 import React,{ Component} from 'react';
-import { socket } from '../socket/openSocket';
 import './inputFile.css';
 import ProgressBar from './elements/progressBar';
 import UploadBtn from './elements/UploadBtn';
@@ -10,16 +9,17 @@ class UploadFile extends Component{
     state = {
         selectedFile: null, loaded: 0, pauseUpload: false, allFiles: null, totalRemainingFiles: null, fileInputText: null, resume: false, cancel: false
     }
+    socket = this.props.socket;
     fReader = new FileReader();
     count = 1;
     constructor(props){
         super(props);
 
-        socket.on('MORE_DATA', (data) => {
+        this.socket.on('MORE_DATA', (data) => {
             this.state.pauseUpload && this.sendMoreData(data);
         })
 
-        socket.on('DONE', (data) => {
+        this.socket.on('DONE', (data) => {
             if(this.state.totalRemainingFiles > 0){
                 //message.info(`${this.count} uploaded`);
                 this.setState((state)=> ({selectedFile: state.allFiles[this.count], totalRemainingFiles: --state.totalRemainingFiles, loaded:0}));
@@ -29,7 +29,7 @@ class UploadFile extends Component{
             }      
         })
 
-        socket.on('cancel-done', (data)=> console.log(data));
+        this.socket.on('cancel-done', (data)=> console.log(data));
     }
     
     sendMoreData = (data) => {
@@ -56,13 +56,13 @@ class UploadFile extends Component{
         if(this.state.selectedFile){
             let name = this.state.selectedFile.name;
             this.fReader.onload = (event) => {
-                socket.emit('UPLOAD', { name, data: event.target.result})
+                this.socket.emit('UPLOAD', { name, data: event.target.result})
             }
-            socket.emit('START', { name, size: this.state.selectedFile.size });
+            this.socket.emit('START', { name, size: this.state.selectedFile.size });
             this.setState({pauseUpload: true});
         } else{
             if(!this.state.allFiles) return null;
-            this.setState({ pauseUpload: false, loaded: 100, totalRemainingFiles: null, resume: false});
+            this.setState({ pauseUpload: false, loaded: 100, totalRemainingFiles: null, resume: false, cancel: false});
             //message.success('All Files Uploaded Successfully');
         }
     }
@@ -80,7 +80,7 @@ class UploadFile extends Component{
 
     handleCancel = () => {
         var files = Array.from(this.state.allFiles).map(file => file.name);
-        socket.emit('cancel', {files});
+        this.socket.emit('cancel', {files});
         this.setState({
             selectedFile: null,
             loaded: 0,

@@ -16,13 +16,16 @@ class App extends Component {
     return (
       <div className="App" style={{paddingTop: 40}}>
         <div style={{width: 300}}>
-            <UploadFile 
+
+            <UploadFile
+                socket={ socket }
                 onPause={()=> console.log('onPause Worked')}
                 onComplete={()=> console.log('onComplete called')}
                 onResume={()=> console.log('onResume called')}
                 onCancel={()=> console.log('onCancel called')}
                 multiple
             />
+            
         </div>
       </div>
     );
