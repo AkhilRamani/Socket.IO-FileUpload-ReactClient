@@ -29,7 +29,19 @@ class UploadFile extends Component{
             }      
         })
 
-        this.socket.on('cancel-done', (data)=> console.log(data));
+        this.socket.on('cancel-done', (data)=> {
+            this.setState({
+                selectedFile: null,
+                loaded: 0,
+                pauseUpload: false,
+                allFiles: null,
+                totalRemainingFiles: null,
+                fileInputText: null,
+                resume: false,
+                cancel: false})
+            this.props.onCancel && this.props.onCancel();
+            console.log(data);
+        });
     }
     
     sendMoreData = (data) => {
@@ -81,16 +93,6 @@ class UploadFile extends Component{
     handleCancel = () => {
         var files = Array.from(this.state.allFiles).map(file => file.name);
         this.socket.emit('cancel', {files});
-        this.setState({
-            selectedFile: null,
-            loaded: 0,
-            pauseUpload: false,
-            allFiles: null,
-            totalRemainingFiles: null,
-            fileInputText: null,
-            resume: false,
-            cancel: false})
-        this.props.onCancel && this.props.onCancel();
     }
 
     render(){
